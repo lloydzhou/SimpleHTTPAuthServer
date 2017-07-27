@@ -69,6 +69,7 @@ class SimpleHTTPAuthHandler(SimpleHTTPRequestHandler):
             fullname = os.path.join(path, name)
             displayname = linkname = name
             date_modified = time.ctime(os.path.getmtime(fullname))
+            size = os.path.getsize(fullname)
             # Append / for directories or @ for symbolic links
             if os.path.isdir(fullname):
                 displayname = name + "/"
@@ -76,8 +77,8 @@ class SimpleHTTPAuthHandler(SimpleHTTPRequestHandler):
             if os.path.islink(fullname):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
-            f.write('<li><a href="%s">%s - %s</a>\n'
-                    % (urllib.quote(linkname), cgi.escape(displayname), date_modified))
+            f.write('<li><a href="%s">%s</a> - %s - %s\n'
+                    % (urllib.quote(linkname), cgi.escape(displayname), date_modified, size))
         f.write("</ul>\n<hr>\n</body>\n</html>\n")
         length = f.tell()
         f.seek(0)
