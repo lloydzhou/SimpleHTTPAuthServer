@@ -77,7 +77,7 @@ class SimpleHTTPAuthHandler(SimpleHTTPRequestHandler):
             if os.path.islink(fullname):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
-            f.write('<td><a href="%s">%s</a></td><td>%s</td><td>%s</td>\n'
+            f.write('<tr><td><a href="%s">%s</a></td><td>%s</td><td>%s</td></tr>\n'
                     % (urllib.quote(linkname), cgi.escape(displayname), size, date_modified))
         f.write("</tbody></table>\n<hr>\n</body>\n</html>\n")
         length = f.tell()
