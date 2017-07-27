@@ -64,7 +64,7 @@ class SimpleHTTPAuthHandler(SimpleHTTPRequestHandler):
         f.write('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
         f.write("<html>\n<title>Directory listing for %s</title>\n" % displaypath)
         f.write("<body>\n<h2>Directory listing for %s</h2>\n" % displaypath)
-        f.write("<hr>\n<ul>\n")
+        f.write("<hr>\n<table>\n<thead><tr><th>NAME</th><th>SIZE</th><th>TIME</th></tr></thead><tbody>")
         for name in flist:
             fullname = os.path.join(path, name)
             displayname = linkname = name
@@ -77,9 +77,9 @@ class SimpleHTTPAuthHandler(SimpleHTTPRequestHandler):
             if os.path.islink(fullname):
                 displayname = name + "@"
                 # Note: a link to a directory displays with @ and links with /
-            f.write('<li><a href="%s">%s</a> - %s - %s\n'
-                    % (urllib.quote(linkname), cgi.escape(displayname), date_modified, size))
-        f.write("</ul>\n<hr>\n</body>\n</html>\n")
+            f.write('<td><a href="%s">%s</a></td><td>%s</td><td>%s</td>\n'
+                    % (urllib.quote(linkname), cgi.escape(displayname), size, date_modified))
+        f.write("</tbody></table>\n<hr>\n</body>\n</html>\n")
         length = f.tell()
         f.seek(0)
         self.send_response(200)
